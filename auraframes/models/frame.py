@@ -53,7 +53,7 @@ class Frame(BaseModel):
     is_charity_water_frame: bool
     num_assets: int
     thanks_on: bool
-    frame_queue_url: str
+    frame_queue_url: Optional[str]
     client_queue_url: str
     scheduled_display_sleep: bool
     scheduled_display_on_at: Optional[str]

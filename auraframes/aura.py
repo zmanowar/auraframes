@@ -1,4 +1,5 @@
 import sys
+import os
 import time
 
 from PIL import Image
@@ -32,7 +33,13 @@ class Aura:
         self.asset_api = AssetApi(self._client)
         self.exif_writer = ExifWriter()
 
-    def login(self, email: str, password: str):
+    def login(self, email: str = os.getenv('AURA_EMAIL'), password: str = os.getenv('AURA_PASSWORD')):
+        """
+
+        :param email: The email of the account to authenticate with, defaults to ENVIRON['AURA_EMAIL']
+        :param password: The password of the account to authenticate with, defaults to ENVIRON['AURA_PASSWORD']
+        :return: Authenticated Aura object
+        """
         user = self.account_api.login(email, password)
 
         self._client.add_default_headers({
@@ -117,6 +124,7 @@ class Aura:
 
     def get_sqs(self):
         self.sqsClient = SQSClient()
+        # TODO: Is this a hardcoded queue URL?
         queueUrl = self.sqsClient.get_queue_url('4ab446b4-33a7-4a76-881d-d545d153ab5a')
         return queueUrl
 
